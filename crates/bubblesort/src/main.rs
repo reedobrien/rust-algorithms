@@ -1,27 +1,59 @@
-use std::io;
-use std::io::Write;
+use anyhow::Result;
 
-use anyhow::{anyhow, Result};
-
-use common::{check_sorted, get_count, make_one, Prng};
+use common::{check_sorted, get_count, make_one};
 
 fn main() -> Result<()> {
     let count = get_count("How many to sort?")?;
-    let mut v = make_one(count, 1000);
+    let max = get_count("Max value: ")?;
+    let mut v = make_one(count, max);
 
     bubble_sort(&mut v);
-    println!("{:#?} {} sorted", v, {
-        if check_sorted(&v) {
-            "is"
-        } else {
-            "is not"
+
+    println!(
+        "{:#?} {} sorted",
+        v.iter().take(20).collect::<Vec<&i32>>(),
+        {
+            if check_sorted(&v) {
+                "is"
+            } else {
+                "is not"
+            }
         }
-    });
+    );
 
     Ok(())
 }
 
 // Bubble sort a vector
 fn bubble_sort(v: &mut Vec<i32>) {
-    let _v = v;
+    if v.len() == 0 {
+        ()
+    }
+
+    let mut sorted = false;
+
+    while !sorted {
+        sorted = true;
+
+        for i in 0..v.len() - 1 {
+            if v[i] > v[i + 1] {
+                v.swap(i, i + 1);
+                sorted = false;
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod unit {
+    use super::*;
+
+    #[test]
+    fn test_bubble_sort() {
+        for i in 5..100 {
+            let mut tut = make_one(i, i);
+            bubble_sort(&mut tut);
+            assert!(check_sorted(&tut));
+        }
+    }
 }

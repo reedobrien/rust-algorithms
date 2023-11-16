@@ -18,12 +18,12 @@ pub fn get_count(prompt: &str) -> Result<usize> {
 }
 
 /// Makes a vec of len `num_items` wiith a max value of max.
-pub fn make_one(num_items: usize, max: i32) -> Vec<i32> {
+pub fn make_one(num_items: usize, max: usize) -> Vec<i32> {
     let mut prng = Prng::new();
 
     let mut v = Vec::with_capacity(num_items);
     for _ in 0..num_items {
-        v.push(prng.next_i32(0, max));
+        v.push(prng.next_i32(0, max as i32));
     }
 
     v
