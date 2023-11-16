@@ -19,18 +19,18 @@ impl Prng {
             .as_millis() as u32;
     }
 
-    fn next_u32(&mut self) -> u32 {
+    pub fn next_u32(&mut self) -> u32 {
         self.seed = self.seed.wrapping_mul(1_103_515_245).wrapping_add(12_345);
         self.seed %= 1 << 31;
 
         self.seed
     }
 
-    fn next_f64(&mut self) -> f64 {
+    pub fn next_f64(&mut self) -> f64 {
         self.next_u32() as f64 / (2147483647.0 + 1.0)
     }
 
-    fn next_i32(&mut self, min: i32, max: i32) -> i32 {
+    pub fn next_i32(&mut self, min: i32, max: i32) -> i32 {
         let range = (max - min) as f64;
 
         (min as f64 + range * self.next_f64()) as i32
