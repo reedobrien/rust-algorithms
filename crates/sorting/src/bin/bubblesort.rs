@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-use common::{check_sorted, get_count, make_one};
+use sorting::{check_sorted, get_count, make_one};
 
 fn main() -> Result<()> {
     let count = get_count("How many to sort?")?;
