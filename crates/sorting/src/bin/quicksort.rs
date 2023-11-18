@@ -37,14 +37,16 @@ fn partition(s: &mut [i32]) -> usize {
     for j in 0..pvt {
         // If the current element is less than or equal to the pivot
         if s[j] <= s[pvt] {
+            // swap it
             s.swap(j, i);
+            // next indext to compare.
             i = i + 1;
         }
     }
 
     s.swap(i, pvt);
-    // the pivot index
-    i as usize
+
+    i
 }
 
 // Sorts a (portion of an) array, divides it into partitions,
@@ -55,7 +57,7 @@ fn quicksort(s: &mut [i32]) {
         // Partition array and get the pivot index
         let p = partition(s);
 
-        // Sort the two partitions
+        // Sort two partitions
         quicksort(&mut s[0..p]); // Left side of pivot
         quicksort(&mut s[(p + 1)..]); // Right side of pivot
     }
