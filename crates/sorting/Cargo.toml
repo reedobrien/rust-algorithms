@@ -14,5 +14,9 @@ anyhow.workspace = true
 bench = false
 
 [[bin]]
-name = "bubblesort"
+name = "bsort"
 path = "src/bin/bubblesort.rs"
+
+[[bin]]
+name = "qsort"
+path = "src/bin/quicksort.rs"
