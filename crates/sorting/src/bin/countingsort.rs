@@ -1,4 +1,5 @@
 use core::fmt;
+use std::{slice::Iter, vec::IntoIter};
 
 use anyhow::Result;
 
@@ -12,7 +13,7 @@ fn main() -> Result<()> {
 
     let c = counting_sort(Customers(v));
 
-    let c = Customers(c.0.into_iter().take(20).collect::<Vec<Customer>>());
+    let c = Customers(c.into_iter().take(20).collect::<Vec<Customer>>());
     println!("{} {} sorted", c, {
         if sorted_customers(&c) {
             "is"
@@ -29,7 +30,7 @@ fn main() -> Result<()> {
 // We find the max as a first step in the fuction.
 fn counting_sort(input: Customers) -> Customers {
     // Get the max value
-    let max = input.0.iter().fold(0, |a, b| a.max(b.num_purchases)) as usize;
+    let max = input.iter().fold(0, |a, b| a.max(b.num_purchases)) as usize;
 
     let mut counts = vec![0i32; max + 1];
     let mut output = vec![
@@ -42,7 +43,6 @@ fn counting_sort(input: Customers) -> Customers {
 
     // Build the counts vec first.
     input
-        .0
         .iter()
         .for_each(|elem| counts[elem.num_purchases as usize] += 1);
 
@@ -55,7 +55,7 @@ fn counting_sort(input: Customers) -> Customers {
     }
 
     // Place the elements in order in the output array.
-    input.0.iter().rev().for_each(|k| {
+    input.iter().rev().for_each(|k| {
         counts[k.num_purchases as usize] -= 1;
         output[counts[k.num_purchases as usize] as usize] = k.clone();
     });
@@ -66,7 +66,7 @@ fn counting_sort(input: Customers) -> Customers {
 struct Customers(pub Vec<Customer>);
 impl fmt::Display for Customers {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        self.0.iter().fold(Ok(()), |result, customer| {
+        self.iter().fold(Ok(()), |result, customer| {
             result.and_then(|_| writeln!(f, "{}", customer))
         })
     }
@@ -74,6 +74,14 @@ impl fmt::Display for Customers {
 impl Customers {
     fn len(&self) -> usize {
         self.0.len()
+    }
+
+    fn iter(&self) -> Iter<'_, Customer> {
+        self.0.iter()
+    }
+
+    fn into_iter(self) -> IntoIter<Customer> {
+        self.0.into_iter()
     }
 }
 
