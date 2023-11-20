@@ -20,3 +20,7 @@ path = "src/bin/bubblesort.rs"
 [[bin]]
 name = "qsort"
 path = "src/bin/quicksort.rs"
+
+[[bin]]
+name = "csort"
+path = "src/bin/countingsort.rs"
