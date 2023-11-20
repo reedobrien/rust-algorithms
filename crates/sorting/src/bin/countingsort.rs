@@ -8,7 +8,7 @@ fn main() -> Result<()> {
 
     let mut v = make_one(count, max);
 
-    v = counting_sort(&mut v);
+    v = counting_sort(v);
 
     println!(
         "{:#?} {} sorted",
@@ -28,7 +28,7 @@ fn main() -> Result<()> {
 // Traditionally this takes an in put array and a max element.
 // counting_sort(input: Vec<i32>, k: usize)
 // We find the max as a first step in the fuction.
-fn counting_sort(input: &mut Vec<i32>) -> Vec<i32> {
+fn counting_sort(input: Vec<i32>) -> Vec<i32> {
     // Get the max value
     let max = input.iter().fold(std::i32::MIN, |a, b| a.max(*b)) as usize;
 
@@ -47,9 +47,9 @@ fn counting_sort(input: &mut Vec<i32>) -> Vec<i32> {
     }
 
     // Place the elements in order in the output array.
-    input.iter().rev().for_each(|k| {
-        counts[*k as usize] -= 1;
-        output[counts[*k as usize] as usize] = *k;
+    input.into_iter().rev().for_each(|k| {
+        counts[k as usize] -= 1;
+        output[counts[k as usize] as usize] = k;
     });
 
     output
@@ -62,8 +62,8 @@ mod unit {
     #[test]
     fn test_counting_sort() {
         for i in 5..1000 {
-            let mut v = make_one(i, i * 2);
-            let got = counting_sort(&mut v);
+            let v = make_one(i, i * 2);
+            let got = counting_sort(v);
             assert!(check_sorted(&got));
         }
     }
