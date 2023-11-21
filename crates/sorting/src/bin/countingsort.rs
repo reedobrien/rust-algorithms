@@ -13,9 +13,10 @@ fn main() -> Result<()> {
 
     let c = counting_sort(Customers(v));
 
+    let sorted = sorted_customers(&c);
     let c = Customers(c.into_iter().take(20).collect::<Vec<Customer>>());
     println!("{} {} sorted", c, {
-        if sorted_customers(&c) {
+        if sorted {
             "is"
         } else {
             "is not"
