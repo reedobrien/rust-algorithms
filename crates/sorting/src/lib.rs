@@ -1,5 +1,5 @@
-use std::io;
 use std::io::Write;
+use std::{io, str::FromStr};
 
 use anyhow::{anyhow, Result};
 
@@ -7,14 +7,19 @@ mod prng;
 pub use prng::Prng;
 
 /// Get's a number of elements to sort from the user.
-pub fn get_count(prompt: &str) -> Result<usize> {
+pub fn get_count<T>(prompt: &str) -> Result<T>
+where
+    T: FromStr,
+{
     println!("{prompt}");
     io::stdout().flush()?;
 
     let mut val = String::new();
     io::stdin().read_line(&mut val)?;
 
-    val.trim().parse().map_err(|e| anyhow!("{e}"))
+    val.trim()
+        .parse::<T>()
+        .map_err(|_| anyhow!(format!("failed to parse input: {prompt}")))
 }
 
 /// Makes a vec of len `num_items` wiith a max value of max.

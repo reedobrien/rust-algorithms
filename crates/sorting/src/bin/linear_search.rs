@@ -8,7 +8,7 @@ fn main() -> Result<()> {
     let v = make_one(size, max);
 
     loop {
-        let query = get_count("Target (-1 to quit):")? as i32;
+        let query = get_count::<i32>("Target (-1 to quit):")?;
         match query {
             1..=40 => {
                 let res = linear_search(&v, query);
@@ -46,8 +46,6 @@ fn linear_search(v: &Vec<i32>, q: i32) -> (i32, i32) {
 
 #[cfg(test)]
 mod unit {
-    use sorting::check_sorted;
-
     use super::*;
 
     #[test]

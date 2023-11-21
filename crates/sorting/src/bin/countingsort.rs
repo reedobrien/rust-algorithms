@@ -6,8 +6,8 @@ use anyhow::Result;
 use sorting::{get_count, Prng};
 
 fn main() -> Result<()> {
-    let count = get_count("How many elements?")?;
-    let max = get_count("With what max value?")?;
+    let count = get_count::<usize>("How many elements?")?;
+    let max = get_count::<usize>("With what max value?")?;
 
     let v = make_customers(count, max);
 
