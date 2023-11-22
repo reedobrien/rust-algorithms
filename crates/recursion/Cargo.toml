@@ -17,3 +17,6 @@ name = "factorial"
 path = "src/bin/factorial.rs"
 
 
+[[bin]]
+name = "fib"
+path = "src/bin/fib.rs"
