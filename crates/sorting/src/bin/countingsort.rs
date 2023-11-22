@@ -52,7 +52,7 @@ fn counting_sort(input: Customers) -> Customers {
     // Spent an embarassing amount of time after setting 0 to 0 and starting at one.
     // 🤦‍
     for idx in 1..counts.len() {
-        counts[idx as usize] += counts[idx as usize - 1]
+        counts[idx] += counts[idx - 1]
     }
 
     // Place the elements in order in the output array.
@@ -67,9 +67,8 @@ fn counting_sort(input: Customers) -> Customers {
 struct Customers(pub Vec<Customer>);
 impl fmt::Display for Customers {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        self.iter().fold(Ok(()), |result, customer| {
-            result.and_then(|_| writeln!(f, "{}", customer))
-        })
+        self.iter()
+            .try_fold((), |_, customer| writeln!(f, "{}", customer))
     }
 }
 impl Customers {

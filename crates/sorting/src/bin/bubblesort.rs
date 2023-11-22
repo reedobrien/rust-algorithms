@@ -27,7 +27,7 @@ fn main() -> Result<()> {
 // Bubble sort a vector
 fn bubble_sort(v: &mut Vec<i32>) {
     if v.len() < 2 {
-        ()
+        return;
     }
 
     let mut sorted = false;

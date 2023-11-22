@@ -4,6 +4,12 @@ pub struct Prng {
     seed: u32,
 }
 
+impl Default for Prng {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Prng {
     pub fn new() -> Self {
         let mut prng = Self { seed: 0 };

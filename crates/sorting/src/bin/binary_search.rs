@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use anyhow::Result;
 
 use sorting::{get_count, make_one, quicksort};
@@ -34,16 +36,16 @@ fn binary_search(input: &mut Vec<i32>, query: i32) -> (i32, i32) {
         tests += 1;
         let middle = (left + right) / 2;
 
-        if input[middle] < query {
-            left = middle + 1;
-        } else if input[middle] > query {
-            if middle > 0 {
-                right = middle - 1;
-            } else {
-                break;
+        match input[middle].cmp(&query) {
+            Ordering::Greater => left = middle + 1,
+            Ordering::Less => {
+                if middle > 0 {
+                    right = middle - 1
+                } else {
+                    break;
+                }
             }
-        } else {
-            return (middle as i32, tests);
+            Ordering::Equal => return (middle as i32, tests),
         }
     }
 

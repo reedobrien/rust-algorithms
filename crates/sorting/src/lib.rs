@@ -24,7 +24,7 @@ pub fn counting_sort(input: Vec<i32>) -> Vec<i32> {
     // Spent an embarassing amount of time after setting 0 to 0 and starting at one.
     // 🤦‍
     for idx in 1..counts.len() {
-        counts[idx as usize] += counts[idx as usize - 1]
+        counts[idx] += counts[idx - 1]
     }
 
     // Place the elements in order in the output array.
@@ -52,7 +52,7 @@ fn partition(s: &mut [i32]) -> usize {
             // swap it
             s.swap(j, i);
             // next indext to compare.
-            i = i + 1;
+            i += 1;
         }
     }
 
@@ -105,13 +105,13 @@ pub fn make_one(num_items: usize, max: usize) -> Vec<i32> {
 
 /// Check that a vec is sorted.
 pub fn check_sorted(v: &Vec<i32>) -> bool {
-    if v.len() == 0 {
+    if v.is_empty() {
         return true;
     }
     let prev = v[0];
 
-    for i in 1..v.len() {
-        if v[i] < prev {
+    for i in v.iter().skip(1) {
+        if v[*i as usize] < prev {
             return false;
         }
     }
