@@ -28,3 +28,7 @@ path = "src/bin/countingsort.rs"
 [[bin]]
 name = "lsearch"
 path = "src/bin/linear_search.rs"
+
+[[bin]]
+name = "bsearch"
+path = "src/bin/binary_search.rs"
