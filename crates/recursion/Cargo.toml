@@ -9,6 +9,7 @@ license.workspace = true
 [dependencies]
 anyhow.workspace = true
 
+sorting = { path = "../sorting"}
 # [lib]
 # bench = false
 
