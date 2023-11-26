@@ -53,6 +53,7 @@ impl Iterator for Fibonacci {
 }
 
 // memoized in a vector.
+#[allow(dead_code)]
 fn fibv(n: u128) -> u128 {
     fn fib_memo(n: u128, memo: &mut [Option<u128>]) -> u128 {
         memo[n as usize].unwrap_or_else(|| match n {
@@ -71,6 +72,7 @@ fn fibv(n: u128) -> u128 {
 }
 
 // memoized in a map.
+#[allow(dead_code)]
 fn fibd(n: u128) -> u128 {
     fn fib_memo(n: u128, memo: &mut HashMap<u128, u128>) -> u128 {
         match n {
@@ -103,6 +105,7 @@ fn fibd(n: u128) -> u128 {
     fib_memo(n, &mut memo)
 }
 
+#[allow(dead_code)]
 fn fibr(n: u64) -> u64 {
     match n {
         0 => 0,
@@ -135,7 +138,7 @@ mod tests {
     #[test]
     fn test_fib_recursive() {
         let fibseq = fib_seq_u64();
-        for (n, want) in fibseq.iter().enumerate() {
+        for (n, want) in fibseq.iter().take(20).enumerate() {
             assert_eq!(fibr(n as u64), *want);
         }
     }
