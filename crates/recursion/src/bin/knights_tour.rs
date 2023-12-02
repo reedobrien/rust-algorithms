@@ -15,6 +15,7 @@ const MOVES: [(isize, isize); 8] = [
 
 const SIZE: usize = 8;
 const UNVISITED: isize = -1;
+const CLOSED_TOUR: bool = false;
 
 struct Board {
     size: usize,
@@ -154,8 +155,19 @@ fn find_tour(board: &mut Board, cell: Cell, count: isize) -> bool {
 }
 
 fn find_tour_backtracking(board: &mut Board, cell: Cell, count: isize) -> bool {
-    if count as usize == board.size() * board.size() {
-        return true;
+    if count as usize == board.cell_count() {
+        if CLOSED_TOUR {
+            for m in MOVES {
+                if board.valid_move(&cell, &(cell.x + m.0, cell.y + m.1)) {
+                    if board.cells[(cell.x + m.0) as usize][(cell.y + m.1) as usize] == 0 {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
     for i in 0..MOVES.len() {
