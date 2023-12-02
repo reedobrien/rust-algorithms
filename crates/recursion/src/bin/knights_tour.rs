@@ -1,16 +1,16 @@
-use std::{fmt, time::Instant};
+use std::{fmt, process, time::Instant};
 
 use anyhow::Result;
 
 const MOVES: [(isize, isize); 8] = [
-    (-1, -2),
-    (-1, 2),
-    (-2, -1),
-    (-2, 1),
-    (1, -2),
-    (1, 2),
-    (2, -1),
     (2, 1),
+    (1, 2),
+    (-1, 2),
+    (-2, 1),
+    (-2, -1),
+    (-1, -2),
+    (1, -2),
+    (2, -1),
 ];
 
 const SIZE: usize = 8;
@@ -19,6 +19,11 @@ const UNVISITED: isize = -1;
 struct Board {
     size: usize,
     cells: Vec<Vec<isize>>,
+}
+
+struct CandidateMove {
+    cell: Cell,
+    paths: usize,
 }
 
 impl Board {
@@ -46,11 +51,7 @@ impl Board {
 
     // Get the next move using Warnsdorf's rule.
     fn next_move(&self, pos: Cell) -> Option<Cell> {
-        struct Candidate {
-            cell: Cell,
-            paths: usize,
-        }
-        let mut candidates: Vec<Candidate> = vec![];
+        let mut candidates: Vec<CandidateMove> = vec![];
 
         let moves = self.moves(pos);
         if moves.len() < 1 {
@@ -58,7 +59,7 @@ impl Board {
         }
 
         for m in moves {
-            candidates.push(Candidate {
+            candidates.push(CandidateMove {
                 cell: m,
                 paths: self.moves(m).len(),
             });
@@ -130,7 +131,7 @@ struct Cell {
 
 impl fmt::Display for Cell {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Count{{x: {}, y: {}}}", self.x, self.y)
+        write!(f, "Cell{{x: {}, y: {}}}", self.x, self.y)
     }
 }
 
@@ -152,12 +153,58 @@ fn find_tour(board: &mut Board, cell: Cell, count: isize) -> bool {
     }
 }
 
+fn find_tour_backtracking(board: &mut Board, cell: Cell, count: isize) -> bool {
+    if count as usize == board.size() * board.size() {
+        return true;
+    }
+
+    for i in 0..MOVES.len() {
+        let m = MOVES[i];
+        if board.valid_move(&cell, &(m.0, m.1)) {
+            let c = Cell {
+                x: &cell.x + m.0,
+                y: cell.y + m.1,
+            };
+            board.visit(&c, count);
+
+            if find_tour_backtracking(board, c, count + 1) {
+                return true;
+            }
+
+            board.visit(&c, UNVISITED);
+        }
+    }
+    false
+}
+
 fn main() -> Result<()> {
     let size: usize = sorting::get_count("What size board?")?;
     let mut board = Board::new(Some(size));
     let start_cell = Cell { x: 0, y: 0 };
+
+    println!("Warnsdorff non-backtracking version");
     let start = Instant::now();
     let success = find_tour(&mut board, start_cell, 0);
+    let duration = start.elapsed();
+
+    match success {
+        true => {
+            println!("Success! in {:?}", duration);
+        }
+        false => println!("Could not find a tour in {:?}...", duration),
+    }
+
+    board.dump();
+
+    println!("recursive backtracking version");
+    if size > 8 {
+        println!("Skipping board size greater than 8. It takes too long.");
+        process::exit(0);
+    }
+    let mut board = Board::new(Some(size));
+    let start = Instant::now();
+    board.visit(&start_cell, 0);
+    let success = find_tour_backtracking(&mut board, start_cell, 1);
     let duration = start.elapsed();
 
     match success {
