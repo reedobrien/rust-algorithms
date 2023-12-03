@@ -24,3 +24,7 @@ path = "src/bin/fib.rs"
 [[bin]]
 name = "ktour"
 path = "src/bin/knights_tour.rs"
+
+[[bin]]
+name = "nqueens"
+path = "src/bin/nqueens.rs"
