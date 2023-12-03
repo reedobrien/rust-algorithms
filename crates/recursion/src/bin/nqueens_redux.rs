@@ -3,7 +3,7 @@ use std::time::Instant;
 use anyhow::Result;
 
 const QUEEN: char = 'Q';
-const EMPTY: char = '.';
+const EMPTY: char = '󰁌';
 const SIZE: usize = 4;
 
 fn main() -> Result<()> {
