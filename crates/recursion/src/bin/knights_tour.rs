@@ -55,7 +55,7 @@ impl Board {
         let mut candidates: Vec<CandidateMove> = vec![];
 
         let moves = self.moves(pos);
-        if moves.len() < 1 {
+        if moves.is_empty() {
             return None;
         }
 
@@ -69,10 +69,6 @@ impl Board {
         candidates.sort_unstable_by_key(|c| c.paths);
 
         Some(candidates[0].cell)
-    }
-
-    fn size(&self) -> usize {
-        self.size
     }
 
     fn max_index(&self) -> isize {
@@ -137,19 +133,16 @@ impl fmt::Display for Cell {
 }
 
 fn find_tour(board: &mut Board, cell: Cell, count: isize) -> bool {
-    loop {
-        board.visit(&cell, count);
+    board.visit(&cell, count);
 
-        match board.next_move(cell) {
-            Some(next_cell) => {
-                return find_tour(board, next_cell, count + 1);
+    match board.next_move(cell) {
+        Some(next_cell) => find_tour(board, next_cell, count + 1),
+        None => {
+            if count == board.cell_count() as isize - 1 {
+                return true;
             }
-            None => {
-                if count == board.cell_count() as isize - 1 {
-                    return true;
-                }
-                return false;
-            }
+
+            false
         }
     }
 }
@@ -158,23 +151,23 @@ fn find_tour_backtracking(board: &mut Board, cell: Cell, count: isize) -> bool {
     if count as usize == board.cell_count() {
         if CLOSED_TOUR {
             for m in MOVES {
-                if board.valid_move(&cell, &(cell.x + m.0, cell.y + m.1)) {
-                    if board.cells[(cell.x + m.0) as usize][(cell.y + m.1) as usize] == 0 {
-                        return true;
-                    }
+                if board.valid_move(&cell, &(cell.x + m.0, cell.y + m.1))
+                    && board.cells[(cell.x + m.0) as usize][(cell.y + m.1) as usize] == 0
+                {
+                    return true;
                 }
             }
+
             return false;
         } else {
             return true;
         }
     }
 
-    for i in 0..MOVES.len() {
-        let m = MOVES[i];
+    for m in MOVES {
         if board.valid_move(&cell, &(m.0, m.1)) {
             let c = Cell {
-                x: &cell.x + m.0,
+                x: cell.x + m.0,
                 y: cell.y + m.1,
             };
             board.visit(&c, count);

@@ -78,12 +78,12 @@ fn cell_is_safe(board: &Vec<Vec<char>>, row: usize, col: usize) -> bool {
 }
 
 fn dump_board(board: &Vec<Vec<char>>) {
-    println!("");
+    println!();
     for row in board {
         for col in row.iter() {
             print!("{col} ");
         }
-        println!("");
+        println!();
     }
 }
 

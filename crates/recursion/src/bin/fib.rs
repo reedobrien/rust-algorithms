@@ -57,8 +57,8 @@ impl Iterator for Fibonacci {
 fn fibv(n: u128) -> u128 {
     fn fib_memo(n: u128, memo: &mut [Option<u128>]) -> u128 {
         memo[n as usize].unwrap_or_else(|| match n {
-            0 => return 0,
-            1 | 2 => return 1,
+            0 => 0,
+            1 | 2 => 1,
             _ => {
                 let val = fib_memo(n - 1, memo) + fib_memo(n - 2, memo);
 
