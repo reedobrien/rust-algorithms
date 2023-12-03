@@ -26,17 +26,24 @@ fn main() -> Result<()> {
 }
 
 fn place_queens_1(board: &mut Vec<Vec<char>>, row: usize, _col: usize) -> bool {
+    // _col isn't necessary here unless we want to do extra work.
     let n = board.len();
+    // If have processed as many rows as there are in the board, we are done.
     if row == n {
         return true;
     }
 
+    // For each column.
     for col in 0..n {
         if cell_is_safe(board, row, col) {
+            // Place a queen if it is safe.
             board[row][col] = QUEEN;
+            // And recursively try the next row.
             if place_queens_1(board, row + 1, col) {
+                // Woohoo success.
                 return true;
             } else {
+                // Backtrack.
                 board[row][col] = EMPTY;
             }
         }
@@ -46,19 +53,20 @@ fn place_queens_1(board: &mut Vec<Vec<char>>, row: usize, _col: usize) -> bool {
 }
 
 fn cell_is_safe(board: &Vec<Vec<char>>, row: usize, col: usize) -> bool {
-    // Check if there is a Q in the column already.
+    // Check if there is a Queen in the column already.
     for (i, _) in board[row].iter().enumerate() {
         if board[i][col] == QUEEN {
+            // whoops already a queen in this column, not safe.
             return false;
         }
     }
 
     // Check the diagonals
-    // rows
+    // k rows
     for k in 0..board.len() {
-        // columns
+        // l columns
         for l in 0..board.len() {
-            // diag down and right, diag up and left
+            // diag down and right || diag up and left
             if k + l == row + col || k - l == row - col {
                 /*
                 0, 1, 2, 3 ...,
@@ -68,6 +76,7 @@ fn cell_is_safe(board: &Vec<Vec<char>>, row: usize, col: usize) -> bool {
                 ..., ..., ...,
                 */
                 if board[k][l] == QUEEN {
+                    // whoops already a queen in the diagonal, not safe.
                     return false;
                 }
             }
