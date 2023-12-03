@@ -28,3 +28,7 @@ path = "src/bin/knights_tour.rs"
 [[bin]]
 name = "nqueens"
 path = "src/bin/nqueens.rs"
+
+[[bin]]
+name = "nqredux"
+path = "src/bin/nqueens_redux.rs"
