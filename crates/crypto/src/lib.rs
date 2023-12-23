@@ -15,7 +15,7 @@ pub fn get_number<T>(prompt: &str) -> Result<T>
 where
     T: FromStr,
 {
-    println!("{prompt}");
+    print!("{prompt} ");
     io::stdout().flush()?;
 
     let mut val = String::new();
