@@ -1,3 +1,5 @@
+//! Run `cargo r --release --example gcdlcm` to run
+//! a looping program to test inputs.
 pub fn gcd(a: usize, b: usize) -> usize {
     if b == 0 {
         return a;
