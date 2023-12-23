@@ -7,8 +7,10 @@ use anyhow::{anyhow, Result};
 
 mod gcd_lcm;
 pub use gcd_lcm::{gcd, lcm};
+mod fast_exp;
+pub use fast_exp::{fast_exp, fast_exp_mod};
 
-/// Get's a number of elements to sort from the user.
+/// Get's a number from the user.
 pub fn get_number<T>(prompt: &str) -> Result<T>
 where
     T: FromStr,
