@@ -32,3 +32,7 @@ path = "src/bin/nqueens.rs"
 [[bin]]
 name = "nqredux"
 path = "src/bin/nqueens_redux.rs"
+
+[[bin]]
+name = "hanoi"
+path = "src/bin/hanoi.rs"
