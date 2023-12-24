@@ -9,6 +9,13 @@ license.workspace = true
 [dependencies]
 anyhow.workspace = true
 
+[dev-dependencies]
+divan.workspace.dev-dependencies = true
+
+[[bench]]
+name = "sieve"
+harness = false
+
 # sorting = { path = "../sorting"}
 # [lib]
 # bench = false

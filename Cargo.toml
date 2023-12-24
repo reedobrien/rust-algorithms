@@ -9,3 +9,6 @@ license = ""
 
 [workspace.dependencies]
 anyhow = "~1"
+
+[workspace.dev-dependencies]
+divan = "~0.1"

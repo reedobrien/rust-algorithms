@@ -9,6 +9,8 @@ mod gcd_lcm;
 pub use gcd_lcm::{gcd, lcm};
 mod fast_exp;
 pub use fast_exp::{fast_exp, fast_exp_mod};
+mod sieve_eratosthenes;
+pub use sieve_eratosthenes::{print_sieve, print_sieve_optimized, sieve_of_eratosthenes};
 
 /// Get's a number from the user.
 pub fn get_number<T>(prompt: &str) -> Result<T>
