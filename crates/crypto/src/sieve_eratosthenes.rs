@@ -63,7 +63,41 @@ pub fn print_sieve_optimized(sieve: &[bool]) {
     println!();
 }
 
+pub fn sieve_to_primes(sieve: &[bool]) -> Vec<usize> {
+    sieve
+        .iter()
+        .enumerate()
+        .filter(|t| *t.1)
+        .map(|t| t.0)
+        .collect()
+}
+
 // Not needed
 // pub fn print_numbers(primes: &[usize]) {
 //     primes.iter().for_each(|prime| print!("{prime} "));
 // }
+
+#[cfg(test)]
+mod unit {
+    use super::*;
+
+    static ONE_HUNDRED: [bool; 101] = [
+        false, false, true, true, false, true, false, true, false, false, false, true, false, true,
+        false, false, false, true, false, true, false, false, false, true, false, false, false,
+        false, false, true, false, true, false, false, false, false, false, true, false, false,
+        false, true, false, true, false, false, false, true, false, false, false, false, false,
+        true, false, false, false, false, false, true, false, true, false, false, false, false,
+        false, true, false, false, false, true, false, true, false, false, false, false, false,
+        true, false, false, false, true, false, false, false, false, false, true, false, false,
+        false, false, false, false, false, true, false, false, false,
+    ];
+
+    #[test]
+    fn sieve_to_usize() {
+        let want = vec![
+            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83,
+            89, 97,
+        ];
+        assert_eq!(sieve_to_primes(&ONE_HUNDRED), want);
+    }
+}
