@@ -15,12 +15,3 @@ divan.workspace.dev-dependencies = true
 [[bench]]
 name = "sieve"
 harness = false
-
-# sorting = { path = "../sorting"}
-# [lib]
-# bench = false
-
-# [[bin]]
-# name = "factorial"
-# path = "src/bin/factorial.rs"
-
