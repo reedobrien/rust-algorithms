@@ -16,6 +16,9 @@ pub use sieve_eratosthenes::{
 mod factor;
 pub use factor::{find_primes, find_primes_sieve, init_prime_sieve};
 
+mod primality;
+pub use primality::find_prime;
+
 /// Get's a number from the user.
 pub fn get_number<T>(prompt: &str) -> Result<T>
 where

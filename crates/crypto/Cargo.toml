@@ -8,6 +8,9 @@ license.workspace = true
 
 [dependencies]
 anyhow.workspace = true
+rand.workspace = true
+
+# Local crates
 
 [dev-dependencies]
 divan.workspace.dev-dependencies = true

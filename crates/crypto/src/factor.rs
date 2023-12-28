@@ -97,6 +97,8 @@ mod unit {
 
     #[test]
     fn sieves_factors() {
+        // makes the tests faster. 6 seconds with 100M
+        BUNCHA_PRIMES.get_or_init(|| sieve_to_primes(&sieve_of_eratosthenes(100_000)));
         assert_eq!(find_primes_sieve(25), vec![5, 5]);
         assert_eq!(find_primes_sieve(11), vec![11]);
         assert_eq!(find_primes_sieve(714), vec![2, 3, 7, 17]);
@@ -104,6 +106,13 @@ mod unit {
         assert_eq!(find_primes_sieve(147), vec![3, 7, 7]);
         assert_eq!(find_primes_sieve(17), vec![17]);
         assert_eq!(find_primes_sieve(330), vec![2, 3, 5, 11]);
+    }
+
+    #[test]
+    #[ignore]
+    fn sieves_large_factors() {
+        // makes the tests faster. 6 seconds with 100M
+        // Only works with the 100M buncha_primes.
         assert_eq!(find_primes_sieve(312680865509917), vec![7791799, 40129483]);
         assert_eq!(
             find_primes_sieve(1819448968910731),

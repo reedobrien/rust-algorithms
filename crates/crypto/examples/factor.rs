@@ -1,4 +1,4 @@
-use std::{process::exit, time::SystemTime};
+use std::time::SystemTime;
 
 use anyhow::Result;
 

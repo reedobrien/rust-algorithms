@@ -9,6 +9,9 @@ license = ""
 
 [workspace.dependencies]
 anyhow = "~1"
+rand = "~0.8"
+
+# Local crates
 
 [workspace.dev-dependencies]
 divan = "~0.1"
