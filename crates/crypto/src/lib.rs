@@ -19,6 +19,9 @@ pub use factor::{find_primes, find_primes_sieve, init_prime_sieve};
 mod primality;
 pub use primality::find_prime;
 
+mod rsa;
+pub use rsa::{inverse_mod, random_exponent, totient};
+
 /// Get's a number from the user.
 pub fn get_number<T>(prompt: &str) -> Result<T>
 where
