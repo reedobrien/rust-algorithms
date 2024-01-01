@@ -2,7 +2,9 @@ use std::process;
 
 use anyhow::Result;
 
+// Error invalid value, Cf. errno.h.
 const EINVAL: i32 = 22;
+
 /// Number of items available for packing.
 const NUM_ITEMS: usize = 20;
 
