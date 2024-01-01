@@ -16,7 +16,6 @@ use dynprog::{exhaustive_search, run_algorithm};
 use rand::rngs::SmallRng;
 use rand::SeedableRng;
 
-/// The number of calls may be off :shrug:.
 fn main() -> Result<()> {
     let mut rng = SmallRng::seed_from_u64(1337);
     let mut items = make_items(

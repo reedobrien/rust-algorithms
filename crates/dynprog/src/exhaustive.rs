@@ -32,6 +32,7 @@ fn do_exhaustive_search(
                 if e.to_string() != "too heavy" {
                     return Err(e);
                 }
+
                 return Ok((vec![], 0, 1));
             }
         }
@@ -50,7 +51,7 @@ fn do_exhaustive_search(
 
     let sol: Vec<Item>;
     let total_val: isize;
-    let mut fcalls: usize = 1;
+    let mut fcalls: usize = 0;
     match do_exhaustive_search(items, allowed_weight, next_idx + 1) {
         Ok(r) => {
             sol = r.0;
@@ -76,7 +77,7 @@ fn do_exhaustive_search(
 
     let sol2: Vec<Item>;
     let total_val2: isize;
-    let mut fcalls2: usize = 1;
+    let mut fcalls2: usize = 0;
     match do_exhaustive_search(items, allowed_weight, next_idx + 1) {
         Ok(r) => {
             sol2 = r.0;
