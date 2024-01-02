@@ -108,15 +108,8 @@ pub fn check_sorted(v: &Vec<i32>) -> bool {
     if v.is_empty() {
         return true;
     }
-    let prev = v[0];
 
-    for i in v.iter().skip(1) {
-        if v[*i as usize] < prev {
-            return false;
-        }
-    }
-
-    true
+    v.windows(2).all(|w| w[0] <= w[1])
 }
 
 /// Print at most `num` items.
@@ -127,7 +120,7 @@ pub fn check_sorted(v: &Vec<i32>) -> bool {
 // println!("{:#?}", v.truncate(num));
 
 #[cfg(test)]
-mod common {
+mod unit {
     use super::*;
 
     #[test]
@@ -151,13 +144,14 @@ mod common {
             (vec![10, 12, 32, 40], true),
             (vec![9, 27, 27, 30], true),
             (vec![1, 2, 2, 4, 4, 5], true),
-            (vec![1, 2, 2, 4, 4, 3], true),
+            (vec![1, 2, 2, 4, 4, 3], false),
         ];
 
         for tc in table {
             assert_eq!(check_sorted(&tc.0), tc.1);
         }
     }
+
     #[test]
     fn test_counting_sort() {
         for i in 5..1000 {

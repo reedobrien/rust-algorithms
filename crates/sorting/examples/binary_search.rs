@@ -53,7 +53,7 @@ fn binary_search(input: &mut Vec<i32>, query: i32) -> (i32, i32) {
 }
 
 #[cfg(test)]
-mod tests {
+mod unit {
     use super::*;
 
     #[test]

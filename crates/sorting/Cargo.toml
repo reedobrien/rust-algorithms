@@ -13,22 +13,22 @@ anyhow.workspace = true
 [lib]
 bench = false
 
-[[bin]]
-name = "bsort"
-path = "src/bin/bubblesort.rs"
+# [[bin]]
+# name = "bsort"
+# path = "src/bin/bubblesort.rs"
 
-[[bin]]
-name = "qsort"
-path = "src/bin/quicksort.rs"
+# [[bin]]
+# name = "qsort"
+# path = "src/bin/quicksort.rs"
 
-[[bin]]
-name = "csort"
-path = "src/bin/countingsort.rs"
+# [[bin]]
+# name = "csort"
+# path = "src/bin/countingsort.rs"
 
-[[bin]]
-name = "lsearch"
-path = "src/bin/linear_search.rs"
+# [[bin]]
+# name = "lsearch"
+# path = "src/bin/linear_search.rs"
 
-[[bin]]
-name = "bsearch"
-path = "src/bin/binary_search.rs"
+# [[bin]]
+# name = "bsearch"
+# path = "src/bin/binary_search.rs"
