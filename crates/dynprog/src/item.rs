@@ -90,6 +90,8 @@ pub fn selected_items(items: &[Item]) -> Vec<Item> {
     items.iter().filter(|i| i.selected).cloned().collect()
 }
 
+/// Calculates the sum of selected item values if the selected items' weight is
+/// <= max_weight provided.
 pub fn solution_value(items: &[Item], max_weight: usize) -> Result<usize> {
     let selected = selected_items(items);
     if sum_weights(&selected) > max_weight {

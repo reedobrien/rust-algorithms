@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-use crate::item::{selected_items, solution_value, Item};
+use crate::item::{solution_value, Item};
 
 pub fn exhaustive_search(
     items: &mut [Item],
@@ -16,7 +16,7 @@ fn do_exhaustive_search(
 ) -> Result<(Vec<Item>, isize, usize)> {
     // Base case.
     if next_idx >= items.len() {
-        match solution_value(&selected_items(items), allowed_weight) {
+        match solution_value(items, allowed_weight) {
             Ok(val) => {
                 return Ok((
                     // Items vec.
