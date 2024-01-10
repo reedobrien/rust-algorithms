@@ -13,7 +13,7 @@ rand.workspace = true
 # Local crates
 
 [dev-dependencies]
-divan.workspace.dev-dependencies = true
+divan.workspace = true
 
 [[bench]]
 name = "sieve"

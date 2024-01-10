@@ -13,5 +13,5 @@ rand = "~0.8"
 
 # Local crates
 
-[workspace.dev-dependencies]
+## dev-dependencies
 divan = "~0.1"
