@@ -14,7 +14,7 @@ const MIN_WEIGHT: usize = 4;
 const MAX_WEIGHT: usize = 10;
 
 use dynprog::item::{make_items, sum_values, sum_weights};
-use dynprog::{branch_and_bound, run_algorithm};
+use dynprog::{branch_and_bound, exhaustive_search, run_algorithm};
 use rand::rngs::SmallRng;
 use rand::SeedableRng;
 
@@ -44,6 +44,14 @@ Allowed weight:  {allowed_weight}
 
     println!("*** Branch and Bound ***");
     run_algorithm(&branch_and_bound, &mut items, allowed_weight);
+
+    if NUM_ITEMS > 23 {
+        eprintln!("{NUM_ITEMS} is too many items for exhaustive search.");
+        process::exit(EINVAL)
+    }
+
+    println!("*** Exhaustive Search ***");
+    run_algorithm(&exhaustive_search, &mut items, allowed_weight);
 
     Ok(())
 }

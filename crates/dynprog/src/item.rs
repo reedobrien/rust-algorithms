@@ -3,14 +3,14 @@ use std::fmt::{Display, Error, Formatter};
 use anyhow::{anyhow, Result};
 use rand::{Rng, RngCore};
 
-pub struct Items(pub Vec<Item>);
+pub struct Items<'a>(pub &'a [Item]); //Vec<Item>);
 
 /// Example
 ///
 /// ```
 /// println!("{}", Items(items.clone()));
 /// ```
-impl Display for Items {
+impl Display for Items<'_> {
     fn fmt(&self, f: &mut Formatter) -> std::result::Result<(), Error> {
         let mut output = String::new();
         for (i, it) in self.0.iter().enumerate() {
