@@ -45,7 +45,7 @@ Allowed weight:  {allowed_weight}
     println!("*** Branch and Bound ***");
     run_algorithm(&branch_and_bound, &mut items, allowed_weight);
 
-    if NUM_ITEMS > 23 {
+    if NUM_ITEMS > 25 {
         eprintln!("{NUM_ITEMS} is too many items for exhaustive search.");
         process::exit(EINVAL)
     }

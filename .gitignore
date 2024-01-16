@@ -1,1 +1,3 @@
 /target
+crates/dynprog/perf.data
+crates/dynprog/flamegraph.svg
