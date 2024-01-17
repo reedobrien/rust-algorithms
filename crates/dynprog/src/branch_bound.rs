@@ -30,7 +30,7 @@ fn do_bnb(
     // a. Add the new parameters
     // best_value, current_value,
     // current_weight, and remaining_value.
-    best_value: usize,
+    mut best_value: usize,
     current_value: usize,
     current_weight: usize,
     remaining_value: usize,
@@ -74,9 +74,11 @@ fn do_bnb(
             current_value + items[next_idx].value,
             current_weight + items[next_idx].weight,
             remaining_value - items[next_idx].value,
-            // sum_values(&items[next_idx..]),
             next_idx + 1,
         )?;
+        if total_val > best_value as isize {
+            best_value = total_val as usize;
+        }
     } else {
         // e. If current_weight + items[next_index].weight <= allowed_weight is
         //    not true, then set the variables test1_solution, test1_value,

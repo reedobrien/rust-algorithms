@@ -6,7 +6,7 @@ use anyhow::Result;
 const EINVAL: i32 = 22;
 
 /// Number of items available for packing.
-const NUM_ITEMS: usize = 20;
+const NUM_ITEMS: usize = 35;
 
 const MIN_VALUE: usize = 1;
 const MAX_VALUE: usize = 10;
