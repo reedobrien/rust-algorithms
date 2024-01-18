@@ -1,4 +1,7 @@
-use std::fmt::{Display, Error, Formatter};
+use std::{
+    collections::BTreeSet,
+    fmt::{Display, Error, Formatter},
+};
 
 use anyhow::{anyhow, Result};
 use rand::{Rng, RngCore};
@@ -29,9 +32,12 @@ impl Display for Items<'_> {
 /// Items are placed into knapsacks.
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd)]
 pub struct Item {
+    pub id: usize,
     pub value: usize,
     pub weight: usize,
     pub selected: bool,
+    pub blocked_by: Option<usize>,
+    pub block_list: BTreeSet<usize>,
 }
 
 /// Example
@@ -48,8 +54,8 @@ impl Display for Item {
     fn fmt(&self, f: &mut Formatter) -> std::result::Result<(), Error> {
         write!(
             f,
-            "Item[ value: {}, weight: {}, selected: {} ]",
-            self.value, self.weight, self.selected,
+            "Item[ value: {}, weight: {}, selected: {}, blocked_by: {:?}, blocked_list: {:#?} ]",
+            self.value, self.weight, self.selected, self.blocked_by, self.block_list
         )
     }
 }
@@ -64,8 +70,9 @@ pub fn make_items(
 ) -> Vec<Item> {
     let mut items = Vec::with_capacity(num_items);
 
-    for _ in 0..num_items {
+    for idx in 0..num_items {
         items.push(Item {
+            id: idx,
             value: rng.gen_range(min_val..max_val + 1),
             weight: rng.gen_range(min_weight..max_weight + 1),
             ..Default::default()
@@ -116,6 +123,7 @@ mod unit {
                 weight: i + 1,
                 // 1, 3, 5, 7, 9 are selected.
                 selected: i % 2 == 0,
+                ..Default::default()
             })
         }
 
@@ -133,8 +141,9 @@ mod unit {
         let mut rng = SmallRng::seed_from_u64(1337);
         let mut want = Vec::with_capacity(num_items);
 
-        for _ in 0..num_items {
+        for idx in 0..num_items {
             want.push(Item {
+                id: idx,
                 value: rng.gen_range(min_val..max_val + 1),
                 weight: rng.gen_range(min_weight..max_weight + 1),
                 ..Default::default()
@@ -177,5 +186,17 @@ mod unit {
             solution_value(&items, max_weight).expect("failed to calculate value"),
             25
         );
+    }
+    #[test]
+    fn dupe_and_mutate_does_not_clobber() {
+        let items = &make_test_items();
+        let mut items2 = duplicate(items);
+
+        assert_eq!(*items, items2);
+
+        items2[0].blocked_by = Some(1);
+        items2[0].block_list.insert(1);
+
+        assert_ne!(*items, items2);
     }
 }

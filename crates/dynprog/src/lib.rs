@@ -10,6 +10,9 @@ pub use exhaustive::exhaustive_search;
 mod branch_bound;
 pub use branch_bound::branch_and_bound;
 
+mod rod;
+pub use rod::rods_technique;
+
 use item::Item;
 
 use crate::item::{selected_items, sum_weights, Items};
