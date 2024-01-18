@@ -26,6 +26,35 @@ pub fn rods_technique(
     )
 }
 
+pub fn rods_technique_sorted(
+    items: &mut [Item],
+    allowed_weight: usize,
+) -> Result<(Vec<Item>, isize, usize)> {
+    make_block_lists(items);
+
+    items.sort_by(|a, b| a.block_list.len().cmp(&b.block_list.len()).reverse());
+    items.iter_mut().enumerate().for_each(|(idx, it)| {
+        it.id = idx;
+    });
+
+    make_block_lists(items);
+
+    let best_value: usize = 0;
+    let current_value: usize = 0;
+    let current_weight: usize = 0;
+    let remaining_value: usize = sum_values(items);
+
+    do_rod(
+        items,
+        allowed_weight,
+        best_value,
+        current_value,
+        current_weight,
+        remaining_value,
+        0,
+    )
+}
+
 fn do_rod(
     items: &mut [Item],
     allowed_weight: usize,
@@ -119,6 +148,7 @@ fn do_rod(
 
 pub fn make_block_lists(items: &mut [Item]) {
     for i in 0..items.len() {
+        items[i].block_list.clear();
         for j in 0..items.len() {
             if i != j && items[i].value >= items[j].value && items[i].weight <= items[j].weight {
                 items[i].block_list.insert(items[j].id);

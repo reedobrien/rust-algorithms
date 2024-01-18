@@ -11,7 +11,7 @@ mod branch_bound;
 pub use branch_bound::branch_and_bound;
 
 mod rod;
-pub use rod::rods_technique;
+pub use rod::{rods_technique, rods_technique_sorted};
 
 use item::Item;
 
