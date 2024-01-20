@@ -39,20 +39,12 @@ Allowed weight:  {allowed_weight}
         sum_weights(&items),
     );
 
-    if NUM_ITEMS > 200 {
-        eprintln!("{NUM_ITEMS} is too many items for Rod's technique sorted.");
+    if NUM_ITEMS > 25 {
+        eprintln!("{NUM_ITEMS} is too many items for exhaustive search.");
         process::exit(EINVAL)
     } else {
-        println!("*** Rod's' Technique Sorted ***");
-        run_algorithm(&rods_technique_sorted, &mut items, allowed_weight);
-    }
-
-    if NUM_ITEMS > 200 {
-        eprintln!("{NUM_ITEMS} is too many items for Rod's technique.");
-        process::exit(EINVAL)
-    } else {
-        println!("*** Rod's' Technique ***");
-        run_algorithm(&rods_technique, &mut items, allowed_weight);
+        println!("*** Exhaustive Search ***");
+        run_algorithm(&exhaustive_search, &mut items, allowed_weight);
     }
 
     if NUM_ITEMS > 40 {
@@ -63,12 +55,20 @@ Allowed weight:  {allowed_weight}
         run_algorithm(&branch_and_bound, &mut items, allowed_weight);
     }
 
-    if NUM_ITEMS > 25 {
-        eprintln!("{NUM_ITEMS} is too many items for exhaustive search.");
+    if NUM_ITEMS > 200 {
+        eprintln!("{NUM_ITEMS} is too many items for Rod's technique.");
         process::exit(EINVAL)
     } else {
-        println!("*** Exhaustive Search ***");
-        run_algorithm(&exhaustive_search, &mut items, allowed_weight);
+        println!("*** Rod's' Technique ***");
+        run_algorithm(&rods_technique, &mut items, allowed_weight);
+    }
+
+    if NUM_ITEMS > 200 {
+        eprintln!("{NUM_ITEMS} is too many items for Rod's technique sorted.");
+        process::exit(EINVAL)
+    } else {
+        println!("*** Rod's' Technique Sorted ***");
+        run_algorithm(&rods_technique_sorted, &mut items, allowed_weight);
     }
 
     Ok(())

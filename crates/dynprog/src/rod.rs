@@ -32,7 +32,7 @@ pub fn rods_technique_sorted(
 ) -> Result<(Vec<Item>, isize, usize)> {
     make_block_lists(items);
 
-    items.sort_by(|a, b| a.block_list.len().cmp(&b.block_list.len()).reverse());
+    items.sort_by(|a, b| b.block_list.len().cmp(&a.block_list.len()));
     items.iter_mut().enumerate().for_each(|(idx, it)| {
         it.id = idx;
     });
@@ -86,28 +86,26 @@ fn do_rod(
     let mut sol: Vec<Item> = vec![];
     let mut total_val: isize = 0;
     let mut fcalls: usize = 1;
-    if items[next_idx].blocked_by.is_none() {
-        if current_weight + items[next_idx].weight <= allowed_weight {
-            items[next_idx].selected = true;
-            (sol, total_val, fcalls) = do_rod(
-                items,
-                allowed_weight,
-                best_value,
-                current_value + items[next_idx].value,
-                current_weight + items[next_idx].weight,
-                remaining_value - items[next_idx].value,
-                next_idx + 1,
-            )?;
-            if total_val > best_value as isize {
-                best_value = total_val as usize;
-            }
+    if items[next_idx].blocked_by.is_none()
+        && current_weight + items[next_idx].weight <= allowed_weight
+    {
+        items[next_idx].selected = true;
+        (sol, total_val, fcalls) = do_rod(
+            items,
+            allowed_weight,
+            best_value,
+            current_value + items[next_idx].value,
+            current_weight + items[next_idx].weight,
+            remaining_value - items[next_idx].value,
+            next_idx + 1,
+        )?;
+        if total_val > best_value as isize {
+            best_value = total_val as usize;
         }
-    } else {
-        (sol, total_val, fcalls) = (vec![], 0, 1);
     }
 
-    let candidate_block_list = items[next_idx].block_list.clone();
-    candidate_block_list.iter().for_each(|i| {
+    let current_block_list = items[next_idx].block_list.clone();
+    current_block_list.iter().for_each(|i| {
         if items[*i].blocked_by.is_none() {
             items[*i].blocked_by = Some(items[next_idx].id);
         }
@@ -129,7 +127,7 @@ fn do_rod(
         next_idx + 1,
     )?;
 
-    candidate_block_list.iter().for_each(|i| {
+    current_block_list.iter().for_each(|i| {
         if items[*i].blocked_by == Some(items[next_idx].id) {
             items[*i].blocked_by = None;
         }
